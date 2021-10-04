@@ -23,6 +23,13 @@ const addPlaceholders = function (word) {
     currentWord.innerText = hiddenWord;
 };
 
+button.addEventListener("click", function (e){
+    e.preventDefault();
 
+    const text = input.value;
+    input.value = "";
+
+    console.log(text);
+});
 
 addPlaceholders(word);
