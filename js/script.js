@@ -29,7 +29,24 @@ button.addEventListener("click", function (e){
     const text = input.value;
     input.value = "";
 
-    console.log(text);
+    message.innerText = "";
+    const ans = validateInput(text);
+
+    console.log(ans);
 });
+
+const validateInput = function (inputText) {
+    const regex = /[a-zA-Z]/;
+
+    if (inputText === ""){
+        message.innerText = "Enter a letter"; 
+    } else if (inputText.length > 1) {
+        message.innerText = "Enter one letter at a time";
+    } else if (!inputText.match(regex)) {
+        message.innerText = "This is not a valid letter"
+    } else {
+        return inputText;
+    }
+};
 
 addPlaceholders(word);
