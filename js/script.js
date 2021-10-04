@@ -9,4 +9,20 @@ const message = document.querySelector(".message");
 const playAgain = document.querySelector(".play-again");
 
 // Word being guessed
-const word = "magnoloa";
+const word = "magnolia";
+
+// -------------------------- Functions
+const addPlaceholders = function (word) {
+    let hiddenWord = "";
+    const letterArray = word.split('');
+
+    for (let letter of letterArray){
+        hiddenWord += "●";
+    }
+
+    currentWord.innerText = hiddenWord;
+};
+
+
+
+addPlaceholders(word);
