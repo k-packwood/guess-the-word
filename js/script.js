@@ -11,6 +11,22 @@ const playAgain = document.querySelector(".play-again");
 // Word being guessed
 const word = "magnolia";
 
+const guessedLetters =  [];
+
+// -------------------------- Event listeners 
+button.addEventListener("click", function (e){
+    e.preventDefault();
+
+    const text = input.value;
+    input.value = "";
+
+    message.innerText = "";
+    
+    if (validateInput(text) != null) {
+        makeGuess(text);
+    }    
+});
+
 // -------------------------- Functions
 const addPlaceholders = function (word) {
     let hiddenWord = "";
@@ -22,18 +38,6 @@ const addPlaceholders = function (word) {
 
     currentWord.innerText = hiddenWord;
 };
-
-button.addEventListener("click", function (e){
-    e.preventDefault();
-
-    const text = input.value;
-    input.value = "";
-
-    message.innerText = "";
-    const ans = validateInput(text);
-
-    console.log(ans);
-});
 
 const validateInput = function (inputText) {
     const regex = /[a-zA-Z]/;
@@ -47,6 +51,17 @@ const validateInput = function (inputText) {
     } else {
         return inputText;
     }
+};
+
+const makeGuess = function (letter) {
+    var upper = letter.toUpperCase();
+    if (guessedLetters.includes(upper)){
+        message.innerText = "You've already guessed this letter. Try another!"
+    } else {
+        guessedLetters.push(upper);
+    }
+
+    console.log(guessedLetters);
 };
 
 addPlaceholders(word);
