@@ -10,7 +10,7 @@ const playAgain = document.querySelector(".play-again");
 
 // Word being guessed
 let word = "magnolia";
-const guessedLetters =  [];
+let guessedLetters =  [];
 let remainingGuesses = 8;
 
 // -------------------------- Event listeners 
@@ -27,7 +27,33 @@ button.addEventListener("click", function (e){
     }    
 });
 
+playAgain.addEventListener("click", function () {
+    message.classList.remove("win");
+    message.innerText = "";
+
+    guessedList.innerHTML = "";
+    guessedList.classList.remove("hide");
+    guessedLetters = [];
+    
+    remainingGuesses = 8;
+    remainingText.innerHTML = `You have <span>${remainingGuesses} guesses</span> remaining.`
+    remainingText.classList.remove("hide");
+
+    button.classList.remove("hide");
+    playAgain.classList.add("hide");
+
+    getWord();
+});
+
 // -------------------------- Functions
+const startOver = function () {
+    button.classList.add("hide");
+    remainingText.classList.add("hide");
+    guessedList.classList.add("hide");
+
+    playAgain.classList.remove("hide");
+};
+
 const getWord = async function () {
     const repo = await fetch ("https://gist.githubusercontent.com/skillcrush-curriculum/7061f1d4d3d5bfe47efbfbcfe42bf57e/raw/5ffc447694486e7dea686f34a6c085ae371b43fe/words.txt");
     const data = await repo.text();
@@ -119,6 +145,8 @@ const countRemainingGuesses = function (guess) {
         message.innerText = "GAME OVER!";
         currentWord.innerText = wordUpper;
         remainingText.innerText = "No guesses remaining";
+
+        startOver();
     } else {
         remainingSpan.innerText = remainingGuesses;
     }
@@ -128,6 +156,8 @@ const wordGuessed = function () {
     if (currentWord.innerText === word.toUpperCase()) {
         message.classList.add("win");
         message.innerHTML = '<p class=highlight">You guessed correct the word! Congrats!</p>';
+
+        startOver();
     }
 };
 
