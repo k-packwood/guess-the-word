@@ -4,14 +4,14 @@ const button = document.querySelector(".guess");
 const input = document.querySelector(".letter");
 const currentWord = document.querySelector(".word-in-progress");
 const remainingText = document.querySelector(".remaining");
-const remainingGuesses = document.querySelector(".remaining span");
+const remainingSpan = document.querySelector(".remaining span");
 const message = document.querySelector(".message");
 const playAgain = document.querySelector(".play-again");
 
 // Word being guessed
 const word = "magnolia";
-
 const guessedLetters =  [];
+let remainingGuesses = 8;
 
 // -------------------------- Event listeners 
 button.addEventListener("click", function (e){
@@ -61,6 +61,7 @@ const makeGuess = function (letter) {
         guessedLetters.push(upper);
         updateLetters();
         updateCurrentWord(guessedLetters);
+        countRemainingGuesses(upper);
     }
 };
 
@@ -92,11 +93,31 @@ const updateCurrentWord = function (guessedLetters) {
     wordGuessed();
 };
 
+const countRemainingGuesses = function (guess) {
+    const wordUpper = word.toUpperCase();
+
+    if (!wordUpper.includes(guess)) {
+        message.innerText = "The hidden word does not contain this letter";
+        remainingGuesses -= 1;
+    } else {
+        message.innerText = "You guessed correctly!";
+    }
+
+    if (remainingGuesses === 0) {
+        message.innerText = "GAME OVER!";
+        currentWord.innerText = wordUpper;
+        remainingText.innerText = "No guesses remaining";
+    } else {
+        remainingSpan.innerText = remainingGuesses;
+    }
+}
+
 const wordGuessed = function () {
     if (currentWord.innerText === word.toUpperCase()) {
         message.classList.add("win");
         message.innerHTML = '<p class=highlight">You guessed correct the word! Congrats!</p>';
     }
 };
+
 
 addPlaceholders(word);
