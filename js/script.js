@@ -89,6 +89,14 @@ const updateCurrentWord = function (guessedLetters) {
     }
 
     currentWord.innerText = revealWord;
+    wordGuessed();
+};
+
+const wordGuessed = function () {
+    if (currentWord.innerText === word.toUpperCase()) {
+        message.classList.add("win");
+        message.innerHTML = '<p class=highlight">You guessed correct the word! Congrats!</p>';
+    }
 };
 
 addPlaceholders(word);
