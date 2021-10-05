@@ -9,7 +9,7 @@ const message = document.querySelector(".message");
 const playAgain = document.querySelector(".play-again");
 
 // Word being guessed
-const word = "magnolia";
+let word = "magnolia";
 const guessedLetters =  [];
 let remainingGuesses = 8;
 
@@ -28,6 +28,18 @@ button.addEventListener("click", function (e){
 });
 
 // -------------------------- Functions
+const getWord = async function () {
+    const repo = await fetch ("https://gist.githubusercontent.com/skillcrush-curriculum/7061f1d4d3d5bfe47efbfbcfe42bf57e/raw/5ffc447694486e7dea686f34a6c085ae371b43fe/words.txt");
+    const data = await repo.text();
+    const wordArray = data.split("\n");  
+    const index = Math.floor(Math.random() * wordArray.length);
+    
+    // assign random word
+    word = wordArray[index].trim();
+
+    addPlaceholders(word);
+};
+
 const addPlaceholders = function (word) {
     let hiddenWord = "";
     const letterArray = word.split('');
@@ -119,5 +131,5 @@ const wordGuessed = function () {
     }
 };
 
-
-addPlaceholders(word);
+// Called on page load
+getWord();
