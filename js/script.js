@@ -59,9 +59,18 @@ const makeGuess = function (letter) {
         message.innerText = "You've already guessed this letter. Try another!"
     } else {
         guessedLetters.push(upper);
+        updateLetters();
     }
+};
 
-    console.log(guessedLetters);
+const updateLetters = function () {
+    guessedList.innerHTML = "";
+
+    for (let letter of guessedLetters){
+        const li = document.createElement("li");
+        li.innerText = letter;
+        guessedList.append(li);
+    }
 };
 
 addPlaceholders(word);
