@@ -60,6 +60,7 @@ const makeGuess = function (letter) {
     } else {
         guessedLetters.push(upper);
         updateLetters();
+        updateCurrentWord(guessedLetters);
     }
 };
 
@@ -71,6 +72,23 @@ const updateLetters = function () {
         li.innerText = letter;
         guessedList.append(li);
     }
+};
+
+const updateCurrentWord = function (guessedLetters) {
+    const wordUpper = word.toUpperCase();
+    const wordArray = wordUpper.split('');
+
+    let revealWord = "";
+
+    for (let letter of wordArray) {
+        if (guessedLetters.includes(letter)) {
+            revealWord += letter.toUpperCase();
+        } else {
+            revealWord += "●";
+        }
+    }
+
+    currentWord.innerText = revealWord;
 };
 
 addPlaceholders(word);
